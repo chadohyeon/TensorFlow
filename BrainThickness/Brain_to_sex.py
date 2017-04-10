@@ -78,12 +78,8 @@ def logireg (X1,Y1,X2,Y2, lr,epoch, dr, batch_size, filename, decaying_rate):
                 print("Accuracy: ", mid_a)
             # Break if loss is NaN
             if np.isnan(cost_val):
-                # Exit the function if loss is NaN at early stage
-                if step+1 < 1000:
-                    print("Use lower learning rate")
-                    return 0
                 print ("Total steps: ", step+1)
-                break
+                return 0
         saver.save(sess,path+filename)
         # accuracy report
         h,c,a=sess.run([hypothesis, predicted, accuracy], feed_dict={x:X2, y:Y2, dropout_rate:1.0})
