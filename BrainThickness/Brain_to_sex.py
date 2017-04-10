@@ -33,7 +33,7 @@ def logireg (X1,Y1,X2,Y2, lr,epoch, dr, batch_size):
 
     # Using Adam optimizer
     cost=-tf.reduce_mean(y*tf.log(hypothesis)+(1-y)*tf.log(1-hypothesis))
-    train=tf.train.AdamOptimizer(learning_rate=lr, beta1).minimize(cost)
+    train=tf.train.AdamOptimizer(learning_rate=lr).minimize(cost)
 
     predicted=tf.cast(hypothesis>0.5, dtype=tf.float32)
     accuracy=tf.reduce_mean(tf.cast(tf.equal(predicted, y), dtype=tf.float32))
