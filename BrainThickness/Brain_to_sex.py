@@ -22,7 +22,7 @@ def logireg (X1,Y1,X2,Y2, lr,epoch, dr, batch_size, filename, decaying_rate):
     b3=tf.Variable(tf.random_normal([256]), name='bias3')
     b4=tf.Variable(tf.random_normal([1]), name='bias3')
 
-    # 3 hidden layers with ReLUs as activation functions and using dropout method
+    # 3 hidden layers with ReLUs as activation functions and dropout method
     _L1=tf.nn.relu(tf.matmul(x,w1)+b1)
     L1=tf.nn.dropout(_L1, dropout_rate)
     _L2=tf.nn.relu(tf.matmul(L1,w2)+b2)
