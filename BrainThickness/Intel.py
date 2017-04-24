@@ -3,9 +3,12 @@ import tensorflow as tf
 from sklearn.preprocessing import MinMaxScaler
 path="/home/byeonguk/Downloads/cha/"
 
-learning = 5e-5
-decaying = 0.98
-epochs = 10000
+lr = 5e-5
+dr=0.7
+batch_size=200
+filename="Intel_"+str(lr)
+decaying_rate = 0.98
+epoch = 10000
 
 x = np.loadtxt(path + 'hcpThick731.csv', delimiter=",", dtype=np.float32).T
 intel=np.loadtxt(path+'hcpIntel.csv', delimiter=",", dtype=np.float32)
@@ -90,7 +93,7 @@ with tf.Session() as sess:
             cost_val, _ = sess.run([cost,train], feed_dict={x: batch_x, y: batch_y, dropout_rate:dr, decaying_lr: lr})
         #Decaying learning rate and interim saving/accuracy report
         if (step+1)%100==0:
-            saver.save(sess, path+filename+"_"+str(folds))
+            saver.save(sess, path+filename+"_"+str(fold))
             lr=lr*decaying_rate**((step+1)/100)
             mid_a = sess.run([accuracy], feed_dict={x: X2, y: Y2, dropout_rate: 1.0})
             print(step+1,cost_val, mid_a)
@@ -102,7 +105,7 @@ with tf.Session() as sess:
             print("Latest saved accuracy: ", mid_a)
             break
     # Final saving/accuracy report
-    saver.save(sess,path+filename+"_"+str(folds))
+    saver.save(sess,path+filename+"_"+str(fold))
     a=sess.run([accuracy], feed_dict={x:X2, y:Y2, dropout_rate:1.0})
     print("Total Accuracy: ", a)
 
