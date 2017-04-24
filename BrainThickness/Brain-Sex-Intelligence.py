@@ -137,7 +137,7 @@ def softmax (X1,Y1, X2,Y2,lr,epoch, dr, batch_size, filename, decaying_rate, fol
     train=tf.train.AdamOptimizer(learning_rate=decaying_lr).minimize(cost)
 
     predicted=tf.argmax(hypothesis,1)
-    accuracy=tf.reduce_mean(tf.cast(tf.equal(predicted, tf.argmax(y_one_hot,1), dtype=tf.float32)))
+    accuracy=tf.reduce_mean(tf.cast(tf.equal(predicted, tf.argmax(y_one_hot,1), dtype=tf.int32)))
 
     # For saving trained model
     tf.add_to_collection('vars',w1)
