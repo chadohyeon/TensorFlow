@@ -61,7 +61,7 @@ cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits, lab
 train=tf.train.AdamOptimizer(learning_rate=decaying_lr).minimize(cost)
 
 predicted=tf.argmax(hypothesis,1)
-accuracy=tf.reduce_mean(tf.cast(tf.equal(predicted, tf.argmax(y_one_hot,1)), dtype=tf.flpat32))
+accuracy=tf.reduce_mean(tf.cast(tf.equal(predicted, tf.argmax(y_one_hot,1)), dtype=tf.float32))
 
 # For saving trained model
 tf.add_to_collection('vars',w1)
