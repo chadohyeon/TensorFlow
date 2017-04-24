@@ -100,6 +100,7 @@ with tf.Session() as sess:
             print("Total steps: ", step+1)
             print("Latest saved steps: ", int((step+1)/100)*100)
             print("Latest saved accuracy: ", mid_a)
+            break
     # Final saving/accuracy report
     saver.save(sess,path+filename+"_"+str(folds))
     a=sess.run([accuracy], feed_dict={x:X2, y:Y2, dropout_rate:1.0})
