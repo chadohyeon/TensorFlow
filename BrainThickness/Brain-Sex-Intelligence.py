@@ -206,7 +206,7 @@ def main(mode, learning, decaying, epochs):
         intel=np.loadtxt(path+'hcpIntel.csv', delimiter=",", dtype=np.float32)
         y=np.array([intel]).T
         for fold in range(10):
-            X1 = np.append(x[:73 * fold, :], y[73 * (fold + 1):, :], axis=0)
+            X1 = np.append(x[:73 * fold, :], x[73 * (fold + 1):, :], axis=0)
             Y1 = np.append(y[:73 * fold, :], y[73 * (fold + 1):, :], axis=0)
             X2 = x[73 * fold:73 * (fold + 1), :]
             Y2 = y[73 * fold:73 * (fold + 1), :]
