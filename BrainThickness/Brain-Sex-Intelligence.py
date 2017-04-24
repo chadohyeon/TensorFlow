@@ -76,23 +76,22 @@ def logireg (X1,Y1, X2,Y2, lr,epoch, dr, batch_size, filename, decaying_rate, fo
                     batch_y=Y1[j*batch_size:,:]
                 cost_val, _ = sess.run([cost,train], feed_dict={x: batch_x, y: batch_y, dropout_rate:dr, decaying_lr: lr})
             # Showing loss values with decaying learning rate
-            #if (step+1)%100==0:
-            #    print(step+1,cost_val)
-            #    saver.save(sess, path+filename)
-            #    lr=lr*decaying_rate**((step+1)/100)
-            # Showing interim accuracy
-            #if (step+1)%500==0:
-            #    mid_a = sess.run([accuracy], feed_dict={x: X2, y: Y2, dropout_rate: 1.0})
-            #    print("Accuracy: ", mid_a)
+            if (step+1)%100==0:
+                saver.save(sess, path+filename+"_"+str(folds))
+                lr=lr*decaying_rate**((step+1)/100)
+                mid_a = sess.run([accuracy], feed_dict={x: X2, y: Y2, dropout_rate: 1.0})
+                #print(step+1,cost_val)
+
             # Break if loss is NaN
             if np.isnan(cost_val):
-                print ("Total steps: ", step+1)
-                print("Accuracy: ", a)
+                print("Total steps: ", step+1)
+                print("Latest saved steps: ", int((step+1)/100)*100)
+                print("Latest saved accuracy: ", mid_a)
                 return 0
         saver.save(sess,path+filename+"_"+str(folds))
         # accuracy report
         a=sess.run([accuracy], feed_dict={x:X2, y:Y2, dropout_rate:1.0})
-        print("Accuracy: ", a)
+        print("Total Accuracy: ", a)
 
 def softmax (X1,Y1, X2,Y2,lr,epoch, dr, batch_size, filename, decaying_rate, folds):
     tf.reset_default_graph()
@@ -170,24 +169,22 @@ def softmax (X1,Y1, X2,Y2,lr,epoch, dr, batch_size, filename, decaying_rate, fol
                     batch_y=Y1[j*batch_size:,:]
                 cost_val, _ = sess.run([cost,train], feed_dict={x: batch_x, y: batch_y, dropout_rate:dr, decaying_lr: lr})
             # Showing loss values with decaying learning rate
-            #if (step+1)%100==0:
-            #    print(step+1,cost_val)
-            #    saver.save(sess, path+filename)
-            #    lr=lr*decaying_rate**((step+1)/100)
-            # Showing interim accuracy
-            #if (step+1)%500==0:
-            #    mid_a = sess.run([accuracy], feed_dict={x: X2, y: Y2, dropout_rate: 1.0})
-            #    print("Accuracy: ", mid_a)
+            if (step+1)%100==0:
+                saver.save(sess, path+filename+"_"+str(folds))
+                lr=lr*decaying_rate**((step+1)/100)
+                mid_a = sess.run([accuracy], feed_dict={x: X2, y: Y2, dropout_rate: 1.0})
+                #print(step+1,cost_val)
+
             # Break if loss is NaN
             if np.isnan(cost_val):
-                print ("Total steps: ", step+1)
-                a = sess.run([accuracy], feed_dict={x: X2, y: Y2, dropout_rate: 1.0})
-                print("Accuracy: ", a)
+                print("Total steps: ", step+1)
+                print("Latest saved steps: ", int((step+1)/100)*100)
+                print("Latest saved accuracy: ", mid_a)
                 return 0
         saver.save(sess,path+filename+"_"+str(folds))
         # accuracy report
         a=sess.run([accuracy], feed_dict={x:X2, y:Y2, dropout_rate:1.0})
-        print("Accuracy: ", a)
+        print("Total Accuracy: ", a)
 
 
 def main(mode, learning, decaying, epochs):
