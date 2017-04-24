@@ -38,14 +38,14 @@ decaying_lr=tf.placeholder(tf.float32)
 w1=tf.get_variable('w1',shape=[cols,200], initializer=tf.contrib.layers.xavier_initializer())
 w2=tf.get_variable('w2',shape=[200,200], initializer=tf.contrib.layers.xavier_initializer())
 w3=tf.get_variable('w3',shape=[200,200], initializer=tf.contrib.layers.xavier_initializer())
-w4=tf.get_variable('w4',shape=[200,1], initializer=tf.contrib.layers.xavier_initializer())
+w4=tf.get_variable('w4',shape=[200,20], initializer=tf.contrib.layers.xavier_initializer())
 
 
 
 b1=tf.Variable(tf.random_normal([200]), name='bias1')
 b2=tf.Variable(tf.random_normal([200]), name='bias2')
 b3=tf.Variable(tf.random_normal([200]), name='bias3')
-b4=tf.Variable(tf.random_normal([1]), name='bias4')
+b4=tf.Variable(tf.random_normal([20]), name='bias4')
 
 
 # 3 hidden layers with ReLUs as activation functions and using dropout method
