@@ -26,7 +26,7 @@ def logireg (X1,Y1, X2,Y2, lr,epoch, dr, batch_size, filename, decaying_rate, fo
     b4=tf.Variable(tf.random_normal([1]), name='bias4')
 
 
-    # 5 hidden layers with ReLUs as activation functions and using dropout method
+    # 3 hidden layers with ReLUs as activation functions and using dropout method
     _L1=tf.nn.relu(tf.matmul(x,w1)+b1)
     L1=tf.nn.dropout(_L1, dropout_rate)
     _L2=tf.nn.relu(tf.matmul(L1,w2)+b2)
@@ -75,7 +75,7 @@ def logireg (X1,Y1, X2,Y2, lr,epoch, dr, batch_size, filename, decaying_rate, fo
                     batch_x=X1[j*batch_size:,:]
                     batch_y=Y1[j*batch_size:,:]
                 cost_val, _ = sess.run([cost,train], feed_dict={x: batch_x, y: batch_y, dropout_rate:dr, decaying_lr: lr})
-            # Showing loss values with decaying learning rate
+            # Decaying learning rate and interim saving/accuracy report
             if (step+1)%100==0:
                 saver.save(sess, path+filename+"_"+str(folds))
                 lr=lr*decaying_rate**((step+1)/100)
@@ -88,8 +88,8 @@ def logireg (X1,Y1, X2,Y2, lr,epoch, dr, batch_size, filename, decaying_rate, fo
                 print("Latest saved steps: ", int((step+1)/100)*100)
                 print("Latest saved accuracy: ", mid_a)
                 return 0
+        # Final saving/accuracy report
         saver.save(sess,path+filename+"_"+str(folds))
-        # accuracy report
         a=sess.run([accuracy], feed_dict={x:X2, y:Y2, dropout_rate:1.0})
         print("Total Accuracy: ", a)
 
@@ -119,7 +119,7 @@ def softmax (X1,Y1, X2,Y2,lr,epoch, dr, batch_size, filename, decaying_rate, fol
     b4=tf.Variable(tf.random_normal([1]), name='bias4')
 
 
-    # 5 hidden layers with ReLUs as activation functions and using dropout method
+    # 3 hidden layers with ReLUs as activation functions and using dropout method
     _L1=tf.nn.relu(tf.matmul(x,w1)+b1)
     L1=tf.nn.dropout(_L1, dropout_rate)
     _L2=tf.nn.relu(tf.matmul(L1,w2)+b2)
@@ -168,7 +168,7 @@ def softmax (X1,Y1, X2,Y2,lr,epoch, dr, batch_size, filename, decaying_rate, fol
                     batch_x=X1[j*batch_size:,:]
                     batch_y=Y1[j*batch_size:,:]
                 cost_val, _ = sess.run([cost,train], feed_dict={x: batch_x, y: batch_y, dropout_rate:dr, decaying_lr: lr})
-            # Showing loss values with decaying learning rate
+            #Decaying learning rate and interim saving/accuracy report
             if (step+1)%100==0:
                 saver.save(sess, path+filename+"_"+str(folds))
                 lr=lr*decaying_rate**((step+1)/100)
@@ -181,8 +181,8 @@ def softmax (X1,Y1, X2,Y2,lr,epoch, dr, batch_size, filename, decaying_rate, fol
                 print("Latest saved steps: ", int((step+1)/100)*100)
                 print("Latest saved accuracy: ", mid_a)
                 return 0
+        # Final saving/accuracy report
         saver.save(sess,path+filename+"_"+str(folds))
-        # accuracy report
         a=sess.run([accuracy], feed_dict={x:X2, y:Y2, dropout_rate:1.0})
         print("Total Accuracy: ", a)
 
