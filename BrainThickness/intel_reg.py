@@ -62,7 +62,7 @@ with tf.Session() as sess:
         if (step+1)%100==0:
             saver.save(sess, path+filename+"_"+str(fold))
             lr=lr*decaying_rate**((step+1)/100)
-            mse=sess.run([cost], feed_dic={x: X2, y: Y2})
+            mse=sess.run([cost], feed_dict={x: X2, y: Y2})
             print("step:" ,step+1," loss:",cost_val," MSE:",mse)
 
         # Break if loss is NaN
@@ -72,9 +72,9 @@ with tf.Session() as sess:
             print("Latest saved MSE: ", mse)
             break
     saver.save(sess,path+filename+"_"+str(fold))
-    mse_total=sess.run([cost], feed_dic={x: X2, y: Y2})
+    mse_total=sess.run([cost], feed_dict={x: X2, y: Y2})
     if fold==1:
-      h=sess.run([hypothesis], feed_dic={x: X2, y: Y2})
+      h=sess.run([hypothesis], feed_dict={x: X2, y: Y2})
       result=np.append(h, Y2, axis=1)
       print(result)
     print("Total MSE: ", mse_total)
