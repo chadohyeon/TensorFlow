@@ -93,7 +93,7 @@ with tf.Session() as sess:
             saver.save(sess, path+filename+"_"+str(folds))
             lr=lr*decaying_rate**((step+1)/100)
             mid_a = sess.run([accuracy], feed_dict={x: X2, y: Y2, dropout_rate: 1.0})
-            print(step+1,cost_val)
+            print(step+1,cost_val, mid_a)
 
         # Break if loss is NaN
         if np.isnan(cost_val):
