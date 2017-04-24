@@ -137,7 +137,7 @@ def softmax (X1,Y1, X2,Y2,lr,epoch, dr, batch_size, filename, decaying_rate, fol
     train=tf.train.AdamOptimizer(learning_rate=decaying_lr).minimize(cost)
 
     predicted=tf.argmax(hypothesis,1)
-    accuracy=tf.reduce_mean(tf.cast(tf.equal(predicted, tf.argmax(y_one_hot,1), dtype=tf.float32)))
+    accuracy=tf.reduce_mean(tf.cast(tf.equal(predicted, tf.argmax(y_one_hot,1), dtype=tf.int32)))
 
     # For saving trained model
     tf.add_to_collection('vars',w1)
@@ -206,7 +206,7 @@ def main(mode, learning, decaying, epochs):
         intel=np.loadtxt(path+'hcpIntel.csv', delimiter=",", dtype=np.float32)
         y=np.array([intel]).T
         for fold in range(10):
-            X1 = np.append(x[:73 * fold, :], y[73 * (fold + 1):, :], axis=0)
+            X1 = np.append(x[:73 * fold, :], x[73 * (fold + 1):, :], axis=0)
             Y1 = np.append(y[:73 * fold, :], y[73 * (fold + 1):, :], axis=0)
             X2 = x[73 * fold:73 * (fold + 1), :]
             Y2 = y[73 * fold:73 * (fold + 1), :]
