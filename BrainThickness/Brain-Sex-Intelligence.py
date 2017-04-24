@@ -4,6 +4,7 @@ from sklearn.preprocessing import MinMaxScaler
 path="C:/Users/cha/Desktop/brain/"
 
 def logireg (X1,Y1, X2,Y2, lr,epoch, dr, batch_size, filename, decaying_rate, folds):
+    # Binary classification with DNN designed for prediction of sex from 59412 regional cortical thickness of a brain. (N=731)
     tf.reset_default_graph()
     cols=X1.shape[1]
     train_n=X1.shape[0]
@@ -94,6 +95,7 @@ def logireg (X1,Y1, X2,Y2, lr,epoch, dr, batch_size, filename, decaying_rate, fo
         print("Total Accuracy: ", a)
 
 def softmax (X1,Y1, X2,Y2,lr,epoch, dr, batch_size, filename, decaying_rate, folds):
+    # Multiple classification with DNN designed for prediction of PMAT score from 59412 regional cortical thickness of a brain. (N=731)
     tf.reset_default_graph()
     cols=X1.shape[1]
     train_n=X1.shape[0]
